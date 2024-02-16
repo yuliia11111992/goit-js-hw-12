@@ -47,7 +47,7 @@ async function fetchPhotos() {
     page: page,
     per_page: per_page,
   });
-  const apiKey = '41249104-77dc8b1e0563744cb8297ef15';
+  const apiKey = '42261083-50fe706ca9c2c1734499a9937';
   const query = userQuery || userInput.value;
   const response = await axios.get(
     `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(
