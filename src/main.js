@@ -13,14 +13,14 @@ const loadMoreBtn = document.querySelector('.load-more');
 let page = 1;
 let per_page = 40;
 
-// Відображаємо loader
+
 const showLoader = () => {
   const loader = document.createElement('span');
   loader.classList.add('loader');
   container.append(loader);
 };
 
-// Ховаємо loader
+
 const hideLoader = () => {
   const loader = document.querySelector('.loader');
   if (loader) {
