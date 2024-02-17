@@ -1,17 +1,18 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-import axios from 'axios';
+
+
+import { fetchPhotos } from './js/pixabay-api';
+import { renderPhotos } from './js/render-functions';
 
 const fetchPicturesForm = document.querySelector('.form');
-const gallery = document.querySelector('.gallery');
-const userInput = document.querySelector('input');
+export const gallery = document.querySelector('.gallery');
+export const userInput = document.querySelector('input');
 const container = document.querySelector('.container');
 const loadMoreBtn = document.querySelector('.load-more');
 
-let page = 1;
-let per_page = 40;
+export let page = 1;
+
 
 
 const showLoader = () => {
@@ -42,49 +43,16 @@ function shouldHideLoadMoreButton(loadedImagesCount, totalImagesCount) {
   return loadedImagesCount >= totalImagesCount;
 }
 
-export async function fetchPhotos() {
-  const params = new URLSearchParams({
-    page: page,
-    per_page: per_page,
-  });
-  const apiKey = '42261083-50fe706ca9c2c1734499a9937';
-  const query = userQuery || userInput.value;
-  const response = await axios.get(
-    `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(
-      query
-    )}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${per_page}`
-  );
-  return response.data;
-}
-export function renderPhotos(data) {
-  const markup = data.hits
-    .map(data => {
-      return `<li class="gallery-item"><a href="${data.webformatURL}">
-            <img class="gallery-image" src="${data.webformatURL}" alt="${data.tags}"></a>
-            <p><b>Likes: </b>${data.likes}</p>
-            <p><b>Views: </b>${data.views}</p>
-            <p><b>Comments: </b>${data.comments}</p>
-            <p><b>Downloads: </b>${data.downloads}</p>
-            </li>`;
-    })
-    .join('');
-
-  if (lightbox) {
-    lightbox.destroy();
-  }
-
-  gallery.insertAdjacentHTML('beforeend', markup);
-  lightbox = new SimpleLightbox('.gallery a', options);
-  lightbox.on('show.simplelightbox');
-  lightbox.refresh();
-}
+ 
+ 
 
 fetchPicturesForm.addEventListener('submit', async e => {
+
   showLoader();
   page = 1;
   e.preventDefault();
   gallery.innerHTML = '';
-  userQuery = userInput.value.trim();
+  const userQuery = userInput.value.trim();
   if (userQuery === '') {
     hideLoader();
     return; }
@@ -154,14 +122,6 @@ loadMoreBtn.addEventListener('click', async () => {
     hideLoadMoreButton();
   }
 });
-let lightbox;
-let userQuery = '';
 
-const options = {
-  captions: true,
-  captionSelector: 'img',
-  captionType: 'attr',
-  captionsData: 'alt',
-  captionPosition: 'bottom',
-  animation: 250,
-};
+
+
