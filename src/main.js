@@ -69,7 +69,7 @@ fetchPicturesForm.addEventListener('submit', async e => {
         backgroundColor: '#EF4040',
         message:
           'Sorry, there are no images matching your search query. Please try again!',
-      });
+      }); 
 
       // Прокрутка сторінки на дві висоти 
       const { height: cardHeight } = document
