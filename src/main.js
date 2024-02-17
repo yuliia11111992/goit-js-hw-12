@@ -42,7 +42,7 @@ function shouldHideLoadMoreButton(loadedImagesCount, totalImagesCount) {
   return loadedImagesCount >= totalImagesCount;
 }
 
-async function fetchPhotos() {
+export async function fetchPhotos() {
   const params = new URLSearchParams({
     page: page,
     per_page: per_page,
@@ -56,7 +56,7 @@ async function fetchPhotos() {
   );
   return response.data;
 }
-function renderPhotos(data) {
+export function renderPhotos(data) {
   const markup = data.hits
     .map(data => {
       return `<li class="gallery-item"><a href="${data.webformatURL}">
@@ -84,8 +84,10 @@ fetchPicturesForm.addEventListener('submit', async e => {
   page = 1;
   e.preventDefault();
   gallery.innerHTML = '';
-  userQuery = userInput.value;
-
+  userQuery = userInput.value.trim();
+  if (userQuery === '') {
+    hideLoader();
+    return; }
   try {
     const photos = await fetchPhotos();
     renderPhotos(photos);
