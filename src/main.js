@@ -59,7 +59,7 @@ fetchPicturesForm.addEventListener('submit', async e => {
   try {
     const photos = await fetchPhotos();
     renderPhotos(photos);
-    fetchPicturesForm.reset();
+    
     hideLoader();
     showLoadMoreButton();
 
